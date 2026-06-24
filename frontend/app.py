@@ -187,8 +187,8 @@ if "user" in st.session_state:
                     )
 
                     image_url = (
-                        f"http://127.0.0.1:8000/uploads/cartoons/{filename}"
-                    )
+    f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{filename}"
+)
 
                     st.session_state["generated"] = True
                     st.session_state["filename"] = filename
@@ -407,8 +407,8 @@ if "user" in st.session_state:
                     )
 
                     original_url = (
-                        f"http://127.0.0.1:8000/uploads/originals/{original_file}"
-                    )
+    f"https://toonify-image-generator-1.onrender.com/uploads/originals/{original_file}"
+)
 
                     st.image(
                         original_url,
@@ -425,8 +425,8 @@ if "user" in st.session_state:
                     )
 
                     generated_url = (
-                        f"http://127.0.0.1:8000/uploads/cartoons/{generated_file}"
-                    )
+    f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
+)
 
                     st.image(
                         generated_url,

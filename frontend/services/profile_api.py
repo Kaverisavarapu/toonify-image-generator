@@ -1,6 +1,7 @@
 import requests
+import requests
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "https://toonify-image-generator-1.onrender.com"
 
 
 def get_profile(user_id):
@@ -25,10 +26,6 @@ def update_profile(
     )
 
     return response.json()
-
-import requests
-
-BASE_URL = "https://toonify-image-generator-1.onrender.com"
 
 
 def upgrade_to_premium(
