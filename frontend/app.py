@@ -77,7 +77,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
+st.error("APP.PY LOADED")
 RAZORPAY_KEY = os.getenv(
     "RAZORPAY_KEY"
 )
