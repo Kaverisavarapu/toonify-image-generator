@@ -432,9 +432,9 @@ if "user" in st.session_state:
                     )
 
                     generated_url = (
-    f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
-)
-
+                            f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
+                        )
+                    print("GENERATED URL =", generated_url)
                     st.image(
                         generated_url,
                         use_container_width=True
