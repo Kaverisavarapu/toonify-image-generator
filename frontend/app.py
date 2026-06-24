@@ -423,22 +423,63 @@ if "user" in st.session_state:
                         use_container_width=True
                     )
 
+                from io import BytesIO
+                from PIL import Image
+                import requests
+                import os
+
                 with col2:
 
-                    st.write(item["generated_image"])
-                    
+                    st.write("RAW PATH:")
+                    st.code(item["generated_image"])
+
                     generated_file = os.path.basename(
                         item["generated_image"]
                     )
-                    st.write(generated_file)
+
+                    st.write("FILENAME:")
+                    st.code(generated_file)
+
                     generated_url = (
-                            f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
+                        f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
+                    )
+
+                    st.write("URL:")
+                    st.code(generated_url)
+
+                    try:
+
+                        response = requests.get(
+                            generated_url,
+                            timeout=30
                         )
-                    st.write("HELLO DEBUG")
-                    st.write(generated_url)
-                    st.image(
-    "https://toonify-image-generator-1.onrender.com/uploads/cartoons/cartoon_ac216963-1e33-4e05-8ec1-7b0cc7a43196_WIN_20251001_21_10_14_Pro.jpg"
-)
+
+                        st.write(
+                            f"HTTP Status: {response.status_code}"
+                        )
+
+                        if response.status_code == 200:
+
+                            img = Image.open(
+                                BytesIO(response.content)
+                            )
+
+                            st.image(
+                                img,
+                                use_container_width=True
+                            )
+
+                        else:
+
+                            st.error(
+                                f"Failed to load image ({response.status_code})"
+                            )
+
+                    except Exception as e:
+
+                        st.error(
+                            f"Image loading error: {e}"
+                        )
                 if st.button(
                     f"Delete #{item['id']}"
                 ):
