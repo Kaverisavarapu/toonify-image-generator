@@ -28,6 +28,12 @@ app.include_router(
     payment_router
 )
 # Serve uploaded images
+from pathlib import Path
+
+print("CURRENT DIR:", Path.cwd())
+print("UPLOADS EXISTS:", Path("backend/uploads").exists())
+print("ORIGINALS EXISTS:", Path("backend/uploads/originals").exists())
+print("CARTOONS EXISTS:", Path("backend/uploads/cartoons").exists())
 app.mount(
     "/uploads",
     StaticFiles(directory="backend/uploads"),
