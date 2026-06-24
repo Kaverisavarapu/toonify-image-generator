@@ -437,9 +437,8 @@ if "user" in st.session_state:
                     st.write("HELLO DEBUG")
                     st.write(generated_url)
                     st.image(
-                        generated_url,
-                        use_container_width=True
-                    )
+    "https://toonify-image-generator-1.onrender.com/uploads/cartoons/cartoon_ac216963-1e33-4e05-8ec1-7b0cc7a43196_WIN_20251001_21_10_14_Pro.jpg"
+)
                 if st.button(
                     f"Delete #{item['id']}"
                 ):
