@@ -1,5 +1,6 @@
 from pathlib import Path
 import streamlit as st
+import os
 def load_css():
 
     css_file = (
@@ -426,9 +427,8 @@ if "user" in st.session_state:
 
                     st.write("Cartoon")
                     
-                    generated_file = (
+                    generated_file = os.path.basename(
                         item["generated_image"]
-                        .split("\\")[-1]
                     )
 
                     generated_url = (

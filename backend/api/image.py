@@ -85,12 +85,14 @@ async def upload_image(
     )
 
     return {
-        "success": True,
-        "history_id": history.id,
-        "effect_name": effect_name,
-        "original_image": str(filepath),
-        "cartoon_image": str(cartoon_path)
-    }
+    "success": True,
+    "history_id": history.id,
+    "effect_name": effect_name,
+    "original_image":
+        f"https://toonify-image-generator-1.onrender.com/uploads/originals/{filename}",
+    "cartoon_image":
+        f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/cartoon_{filename}"
+}
 
 @router.delete(
     "/history/{history_id}"
