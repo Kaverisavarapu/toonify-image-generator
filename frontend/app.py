@@ -425,16 +425,16 @@ if "user" in st.session_state:
 
                 with col2:
 
-                    st.write("Cartoon")
+                    st.write(item["generated_image"])
                     
                     generated_file = os.path.basename(
                         item["generated_image"]
                     )
-
+                    st.write(generated_file)
                     generated_url = (
                             f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
                         )
-                    print("GENERATED URL =", generated_url)
+                    st.write(generated_url)
                     st.image(
                         generated_url,
                         use_container_width=True
