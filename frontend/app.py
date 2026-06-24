@@ -21,7 +21,14 @@ def load_css():
 load_css()
 import streamlit as st
 import requests
+import sys
+import os
 
+sys.path.append(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    )
+)
 from services.auth_api import (
     login_user,
     signup_user
