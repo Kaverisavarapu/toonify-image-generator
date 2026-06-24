@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "https://toonify-image-generator-1.onrender.com"
 
 def delete_history_item(
     history_id
