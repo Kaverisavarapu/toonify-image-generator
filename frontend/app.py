@@ -434,6 +434,7 @@ if "user" in st.session_state:
                     generated_url = (
                             f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
                         )
+                    st.write("HELLO DEBUG")
                     st.write(generated_url)
                     st.image(
                         generated_url,
