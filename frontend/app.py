@@ -407,108 +407,61 @@ if "user" in st.session_state:
 
                 with col1:
 
-                    st.write("ORIGINAL PATH:")
-                    st.write(item["original_image"])
-
                     original_file = os.path.basename(
                         item["original_image"]
                     )
-
-                    st.write("ORIGINAL FILE:")
-                    st.write(original_file)
 
                     original_url = (
                         f"https://toonify-image-generator-1.onrender.com/uploads/originals/{original_file}"
                     )
 
-                    st.write("ORIGINAL URL:")
-                    st.write(original_url)
+                    st.write("Original")
 
-                    response = requests.get(original_url)
-
-                    st.write(
-                        f"Original HTTP Status: {response.status_code}"
+                    st.image(
+                        original_url,
+                        use_container_width=True
                     )
 
-                    if response.status_code == 200:
-                        st.image(original_url)
-                    else:
-                        st.error(
-                            f"Original image failed ({response.status_code})"
-                        )
 
-                from io import BytesIO
-                from PIL import Image
-                import requests
-                import os
+            with col2:
 
-                with col2:
+                generated_file = os.path.basename(
+                    item["generated_image"]
+                )
 
-                    st.write("RAW PATH:")
-                    st.code(item["generated_image"])
+                generated_url = (
+                    f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
+                )
 
-                    generated_file = os.path.basename(
-                        item["generated_image"]
+                st.write("Generated Cartoon")
+
+                st.image(
+                    generated_url,
+                    use_container_width=True
+                )
+
+
+            if st.button(
+                f"Delete #{item['id']}"
+            ):
+
+                result = delete_history_item(
+                    item["id"]
+                )
+
+                if result["success"]:
+
+                    st.success(
+                        "Deleted successfully"
                     )
 
-                    st.write("FILENAME:")
-                    st.code(generated_file)
+                    st.rerun()
 
-                    generated_url = (
-                        f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{generated_file}"
+                else:
+
+                    st.error(
+                        "Failed to delete history."
                     )
-
-                    st.write("URL:")
-                    st.code(generated_url)
-
-                    try:
-
-                        response = requests.get(
-                            generated_url,
-                            timeout=30
-                        )
-
-                        st.write(
-                            f"HTTP Status: {response.status_code}"
-                        )
-
-                        if response.status_code == 200:
-
-                            img = Image.open(
-                                BytesIO(response.content)
-                            )
-
-                            st.image(
-                                img,
-                                use_container_width=True
-                            )
-
-                        else:
-
-                            st.error(
-                                f"Failed to load image ({response.status_code})"
-                            )
-
-                    except Exception as e:
-
-                        st.error(
-                            f"Image loading error: {e}"
-                        )
-                if st.button(
-                    f"Delete #{item['id']}"
-                ):
-
-                    result = delete_history_item(
-                        item["id"]
-                    )
-
-                    if result["success"]:
-
-                        st.success(
-                            "Deleted successfully"
-                        )
-
-                        st.rerun()
     # ==========================================
     # ADMIN PAGE
     # ==========================================
