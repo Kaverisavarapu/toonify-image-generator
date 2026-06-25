@@ -187,33 +187,43 @@ if "user" in st.session_state:
                         effect
                     )
 
-                if result.get("success"):
+                    if result.get("success"):
 
-                    filename = (
-                        result["cartoon_image"]
-                        .split("\\")[-1]
-                    )
+                        st.json(result)
 
-                    image_url = (
-    f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{filename}"
-)
+                        import os
 
-                    st.session_state["generated"] = True
-                    st.session_state["filename"] = filename
-                    st.session_state["image_url"] = image_url
-                    st.session_state["price"] = price
-                    st.session_state["effect"] = effect
+                        filename = os.path.basename(
+                            result["cartoon_image"]
+                        )
 
-                    st.success(
-                        "Cartoon generated successfully!"
-                    )
+                        image_url = (
+                            f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/{filename}"
+                        )
 
-                else:
+                        st.write("Filename:", filename)
+                        st.write("Image URL:", image_url)
 
-                    st.error(
-                        "Generation failed"
-                    )
+                        st.session_state["generated"] = True
+                        st.session_state["filename"] = filename
+                        st.session_state["image_url"] = image_url
+                        st.session_state["price"] = price
+                        st.session_state["effect"] = effect
 
+                        st.success(
+                            "Cartoon generated successfully!"
+                        )
+
+                        st.rerun()
+
+                    else:
+
+                        st.error(
+                            result.get(
+                                "message",
+                                "Generation failed"
+                            )
+                        )
         # ==========================================
         # SHOW GENERATED IMAGE
         # ==========================================
@@ -221,18 +231,30 @@ if "user" in st.session_state:
         if st.session_state.get("generated"):
 
             filename = st.session_state["filename"]
-
             image_url = st.session_state["image_url"]
-
             price = st.session_state["price"]
-
             effect = st.session_state["effect"]
 
-            st.image(
-                image_url,
-                caption="Generated Cartoon",
-                use_container_width=True
-            )
+            st.write("Stored URL:")
+            st.write(image_url)
+
+            response = requests.get(image_url)
+
+            st.write("HTTP Status:", response.status_code)
+
+            if response.status_code == 200:
+
+                st.image(
+                    image_url,
+                    caption="Generated Cartoon",
+                    use_container_width=True
+                )
+
+            else:
+
+                st.error(
+                    f"Image not found ({response.status_code})"
+                )
 
             try:
 
