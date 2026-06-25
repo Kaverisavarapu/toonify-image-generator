@@ -407,21 +407,35 @@ if "user" in st.session_state:
 
                 with col1:
 
-                    st.write("Original")
+                    st.write("ORIGINAL PATH:")
+                    st.write(item["original_image"])
 
-                    original_file = (
+                    original_file = os.path.basename(
                         item["original_image"]
-                        .split("\\")[-1]
                     )
+
+                    st.write("ORIGINAL FILE:")
+                    st.write(original_file)
 
                     original_url = (
-    f"https://toonify-image-generator-1.onrender.com/uploads/originals/{original_file}"
-)
-
-                    st.image(
-                        original_url,
-                        use_container_width=True
+                        f"https://toonify-image-generator-1.onrender.com/uploads/originals/{original_file}"
                     )
+
+                    st.write("ORIGINAL URL:")
+                    st.write(original_url)
+
+                    response = requests.get(original_url)
+
+                    st.write(
+                        f"Original HTTP Status: {response.status_code}"
+                    )
+
+                    if response.status_code == 200:
+                        st.image(original_url)
+                    else:
+                        st.error(
+                            f"Original image failed ({response.status_code})"
+                        )
 
                 from io import BytesIO
                 from PIL import Image
