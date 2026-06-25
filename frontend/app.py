@@ -78,9 +78,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 st.error("APP.PY LOADED")
-RAZORPAY_KEY = os.getenv(
-    "RAZORPAY_KEY"
-)
+
+RAZORPAY_KEY = st.secrets["RAZORPAY_KEY"]
 from effects import EFFECTS
 st.set_page_config(
     page_title="Toonify",
