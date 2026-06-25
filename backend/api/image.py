@@ -33,40 +33,37 @@ async def upload_image(
     db: Session = Depends(get_db)
 ):
 
+    print("1. Upload started")
+
     filename = f"{uuid.uuid4()}_{image.filename}"
 
     filepath = UPLOAD_DIR / filename
 
     with open(filepath, "wb") as buffer:
-        shutil.copyfileobj(
-            image.file,
-            buffer
-        )
+        shutil.copyfileobj(image.file, buffer)
+
+    print("2. Image saved")
 
     history = save_upload_record(
-    db=db,
-    user_id=user_id,
-    image_path=str(filepath),
-    effect_name=effect_name
-)
-
-    cartoon_dir = (
-        BASE_DIR
-        / "uploads"
-        / "cartoons"
+        db=db,
+        user_id=user_id,
+        image_path=str(filepath),
+        effect_name=effect_name
     )
 
+    print("3. History saved")
+
+    cartoon_dir = BASE_DIR / "uploads" / "cartoons"
     cartoon_dir.mkdir(
         parents=True,
         exist_ok=True
     )
 
-    cartoon_path = (
-        cartoon_dir
-        / f"cartoon_{filename}"
-    )
+    print("4. Cartoon folder ready")
 
- 
+    cartoon_path = cartoon_dir / f"cartoon_{filename}"
+
+    print("5. Before generate_effect")
 
     generate_effect(
         str(filepath),
@@ -74,9 +71,9 @@ async def upload_image(
         effect_name
     )
 
-    from backend.services.image_service import (
-        update_cartoon_path
-    )
+    print("6. After generate_effect")
+
+    from backend.services.image_service import update_cartoon_path
 
     update_cartoon_path(
         db,
@@ -84,15 +81,15 @@ async def upload_image(
         str(cartoon_path)
     )
 
+    print("7. Database updated")
+
     return {
-    "success": True,
-    "history_id": history.id,
-    "effect_name": effect_name,
-    "original_image":
-        f"https://toonify-image-generator-1.onrender.com/uploads/originals/{filename}",
-    "cartoon_image":
-        f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/cartoon_{filename}"
-}
+        "success": True,
+        "history_id": history.id,
+        "effect_name": effect_name,
+        "original_image": f"https://toonify-image-generator-1.onrender.com/uploads/originals/{filename}",
+        "cartoon_image": f"https://toonify-image-generator-1.onrender.com/uploads/cartoons/cartoon_{filename}"
+    }
 
 @router.delete(
     "/history/{history_id}"
