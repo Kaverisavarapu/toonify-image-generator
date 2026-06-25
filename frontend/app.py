@@ -235,26 +235,11 @@ if "user" in st.session_state:
             price = st.session_state["price"]
             effect = st.session_state["effect"]
 
-            st.write("Stored URL:")
-            st.write(image_url)
-
-            response = requests.get(image_url)
-
-            st.write("HTTP Status:", response.status_code)
-
-            if response.status_code == 200:
-
-                st.image(
-                    image_url,
-                    caption="Generated Cartoon",
-                    use_container_width=True
-                )
-
-            else:
-
-                st.error(
-                    f"Image not found ({response.status_code})"
-                )
+            st.image(
+                image_url,
+                caption="Generated Cartoon",
+                use_container_width=True
+            )
 
             try:
 
